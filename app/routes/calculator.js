@@ -14,8 +14,7 @@ var CalculatorRoute = Ember.Route.extend({
       if (this.controller.get('status') === 'first') {
         this.controller.set('firstOperand', result);
         this.controller.set('operation', operation);
-        this.controller.set('status', 'second');
-        this.controller.set('result', '');
+        this.controller.set('status', 'transition');
       }
     },
     equals: function() {
@@ -35,6 +34,11 @@ var CalculatorRoute = Ember.Route.extend({
       this.controller.set('status', 'first');
     },
     show: function(number) {
+      if (this.controller.get('status') === 'transition') {
+        this.controller.set('result', '');
+        this.controller.set('status', 'second');
+      }
+
       var result = this.controller.get('result');
       this.controller.set('result', result += number);
     },
