@@ -1,0 +1,35 @@
+<div id="calculator-box">
+  <table id="calculator">
+    <tr id="screen">{{input value=display disabled='true'}}</tr>
+    <tr>
+      <td><button {{action 'show' '1'}}>1</button></td>
+      <td><button {{action 'show' '2'}}>2</button></td>
+      <td><button {{action 'show' '3'}}>3</button></td>
+      <td><button {{action 'operate' 'add'}}>+</button></td>
+    </tr>
+    <tr>
+      <td><button {{action 'show' '4'}}>4</button></td>
+      <td><button {{action 'show' '5'}}>5</button></td>
+      <td><button {{action 'show' '6'}}>6</button></td>
+      <td><button {{action 'operate' 'subtract'}}>-</button></td>
+    </tr>
+    <tr>
+      <td><button {{action 'show' '7'}}>7</button></td>
+      <td><button {{action 'show' '8'}}>8</button></td>
+      <td><button {{action 'show' '9'}}>9</button></td>
+      <td><button {{action 'operate' 'multiply'}}>*</button></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><button {{action 'show' '0'}}>0</button></td>
+      <td></td>
+      <td><button {{action 'operate' 'divide'}}>/</button></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td><button {{action 'clear'}}>C</button></td>
+      <td><button {{action 'equals'}}>=</button></td>
+    </tr>
+  </table>
+</div>
