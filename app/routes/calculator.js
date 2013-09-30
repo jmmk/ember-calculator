@@ -3,48 +3,38 @@ import Calculator from 'appkit/models/calculator';
 var CalculatorRoute = Ember.Route.extend({
   model: function(){
     return Calculator.create({
-      result: '',
+      currentNumber: '',
       status: 'first'
     })
   },
 
   actions: {
     operate: function(operation) {
-      var result = this.controller.get('result');
+      var number = this.controller.get('currentNumber');
       if (this.controller.get('status') === 'first') {
-        this.controller.set('firstOperand', result);
-        this.controller.set('operation', operation);
-        this.controller.set('status', 'transition');
+        this.controller.setProperties({'firstOperand': number,
+          'operation': operation, 'status': 'transition'});
       }
     },
     equals: function() {
-      var result = this.controller.get('result');
-      this.controller.set('secondOperand', result);
+      var number = this.controller.get('currentNumber');
+      this.controller.set('secondOperand', number);
       var first = parseInt(this.controller.get('firstOperand'));
       var second = parseInt(this.controller.get('secondOperand'));
-      if (this.controller.get('operation') === 'add') {
-        this.controller.set('result', first + second);
-      } else if (this.controller.get('operation') === 'subtract') {
-        this.controller.set('result', first - second);
-      } else if (this.controller.get('operation') === 'multiply') {
-        this.controller.set('result', first * second);
-      } else {
-        this.controller.set('result', first / second);
-      }
-      this.controller.set('status', 'first');
+      var operation = this.controller.get('operation')
+      var result = this.controller.get('model').calculate(operation, first, second)
+      this.controller.setProperties({'currentNumber': result, 'status': 'first'});
     },
-    show: function(number) {
+    show: function(newNumber) {
       if (this.controller.get('status') === 'transition') {
-        this.controller.set('result', '');
-        this.controller.set('status', 'second');
+        this.controller.setProperties({'currentNumber': '', 'status': 'second'});
       }
 
-      var result = this.controller.get('result');
-      this.controller.set('result', result += number);
+      var number = this.controller.get('currentNumber');
+      this.controller.set('currentNumber', number += newNumber);
     },
     clear: function() {
-      this.controller.set('status', 'first');
-      this.controller.set('result', '');
+      this.controller.setProperties({'status': 'first', 'currentNumber': ''});
     }
   }
 });
